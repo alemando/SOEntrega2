@@ -13,13 +13,22 @@ $(document).ready(function(){
                 var red1 = direccionRed(ip1, mascara)
                 var red2 = direccionRed(ip2, mascara)
                 if(red1 == red2){
-                    resultText = 'La dirección de red es: '+ direccionRedMascara(red1, mascara) + '\n'+
-                    "La ip de broadcast es: "+direccionRedBroadcast(red1, mascara)+'\n'+
-                    "La cantidad maxima de usuarios que pueden conectarsen es: "+direccionPosibles(mascara)
-                    Swal.fire({
-                        icon: 'success',
-                        text: resultText
-                    })
+                    if(mascara != "255.255.255.255"){
+                        resultText = 'La dirección de red es: '+ direccionRedMascara(red1, mascara) + '<br></br>'+
+                        "La ip de broadcast es: "+direccionRedBroadcast(red1, mascara)+'<br></br>'+
+                        "La cantidad maxima de usuarios que pueden conectarsen es: "+direccionPosibles(mascara)
+                        Swal.fire({
+                            icon: 'success',
+                            html: resultText
+                        })
+                        
+                    }else{
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'No es posible obtener la red, la ip de broadcast y el numero de usuarios con esa mascara'
+                        })
+                    }
                 }else{
                     Swal.fire({
                         icon: 'error',
@@ -37,14 +46,22 @@ $(document).ready(function(){
             
         }else if(regex.test(ip1) && regex.test(mascara)){
             if(validarMascara(mascara)){
-                var red1 = direccionRed(ip1, mascara)
-                resultText = 'La dirección de red es: '+ direccionRedMascara(red1, mascara) + '\n'+
-                    "La ip de broadcast es: "+direccionRedBroadcast(red1, mascara)+'\n'+
-                    "La cantidad maxima de usuarios que pueden conectarsen es: "+direccionPosibles(mascara)
+                if(mascara != "255.255.255.255"){
+                    var red1 = direccionRed(ip1, mascara)
+                    resultText = 'La dirección de red es: '+ direccionRedMascara(red1, mascara) + '<br></br>'+
+                        "La ip de broadcast es: "+direccionRedBroadcast(red1, mascara)+'<br></br>'+
+                        "La cantidad maxima de usuarios que pueden conectarsen es: "+direccionPosibles(mascara)
+                        Swal.fire({
+                            icon: 'success',
+                            html: resultText
+                        })
+                }else{
                     Swal.fire({
-                        icon: 'success',
-                        text: resultText
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'No es posible obtener la red, la ip de broadcast y el numero de usuarios con esa mascara'
                     })
+                }
             }else{
                 Swal.fire({
                     icon: 'error',
